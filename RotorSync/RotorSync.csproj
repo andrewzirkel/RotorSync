@@ -63,6 +63,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RS.cs" />
+    <Compile Include="RSHDHomeRunDevice.cs" />
+    <Compile Include="RSTuner.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -75,6 +78,12 @@
     <EmbeddedResource Include="RotorSync.resx">
       <DependentUpon>RotorSync.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\HDHR.NET\HDHR.vcxproj">
+      <Project>{b7b17717-da85-49fa-882a-3950c1cd4471}</Project>
+      <Name>HDHR</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -12,6 +12,7 @@ namespace RotorSync
 {
     public partial class RotorSync : ServiceBase
     {
+        private RS RSInstance;
         public RotorSync()
         {
             InitializeComponent();
@@ -27,10 +28,13 @@ namespace RotorSync
 
         protected override void OnStart(string[] args)
         {
+            //RSInstance = new RS("10178456");
+            RSInstance = new RS("1050A596");
             eventLog1.WriteEntry("In OnStart");
             // Set up a timer to trigger every minute.
             System.Timers.Timer timer = new System.Timers.Timer();
-            timer.Interval = 60000; // 60 seconds
+            timer.Interval = 1000; // 1 seconds
+            //timer.Interval = 60000; // 60 seconds
             timer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnTimer);
             timer.Start();
         }
@@ -44,7 +48,9 @@ namespace RotorSync
         {
             // TODO: Insert monitoring activities here.
             //eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
-            eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information);
+            //eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information);
+            if (RSInstance.DoSync())
+                eventLog1.WriteEntry("Channel: " + RSInstance.channel + " Symbol Quality: " + RSInstance.symbolQuality, EventLogEntryType.Information);
         }
     }
 }
