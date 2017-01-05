@@ -28,9 +28,9 @@ namespace RotorSync
 
         protected override void OnStart(string[] args)
         {
-            //RSInstance = new RS("10178456");
-            RSInstance = new RS("1050A596");
-            eventLog1.WriteEntry("In OnStart");
+            RSInstance = new RS("10178456");
+            //RSInstance = new RS("1050A596");
+            eventLog1.WriteEntry("In OnStart.  " + "Config Data: " + "DeviceID: " + RSInstance.deviceID);
             // Set up a timer to trigger every minute.
             System.Timers.Timer timer = new System.Timers.Timer();
             timer.Interval = 1000; // 1 seconds
@@ -50,7 +50,9 @@ namespace RotorSync
             //eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
             //eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information);
             if (RSInstance.DoSync())
-                eventLog1.WriteEntry("Channel: " + RSInstance.channel + " Symbol Quality: " + RSInstance.symbolQuality, EventLogEntryType.Information);
+                eventLog1.WriteEntry("Channel: " + RSInstance.channel + 
+                    "\nSymbol Quality: " + RSInstance.symbolQuality +
+                    "\nRotating to: " + RSInstance.currentAzimuth, EventLogEntryType.Information);
         }
     }
 }
