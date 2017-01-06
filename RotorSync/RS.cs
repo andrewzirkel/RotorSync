@@ -13,6 +13,7 @@ namespace RotorSync
         public string deviceID;
         private RSHDHomeRunDevice hdhr;
         private RSData rsdata;
+        private RSRotor rotor;
 
         //keeping track of timeouts
         private int badSignalCounter;
@@ -29,6 +30,7 @@ namespace RotorSync
             deviceID = id;
             hdhr = new RSHDHomeRunDevice(deviceID);
             rsdata = new RSData("C:\\Code\\RotorSync\\RotorSync\\RSDatabase.db");
+            rotor = new RSRotor();
             deviceID = rsdata.getHDHRDeviceIDs();
             badSignalCounter = 0;
             currentAzimuth = 0;
@@ -74,6 +76,7 @@ namespace RotorSync
             //check if antenna is already rotated to the indicated azimuth.
             if (currentAzimuth == azimuth) return false;
             currentAzimuth = azimuth;
+            rotor.RotateToAzimuth(azimuth.ToString());
             return true;
         }
     }

@@ -123,6 +123,7 @@
     <Compile Include="RS.cs" />
     <Compile Include="RSData.cs" />
     <Compile Include="RSHDHomeRunDevice.cs" />
+    <Compile Include="RSRotor.cs" />
     <Compile Include="RSTuner.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />

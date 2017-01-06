@@ -60,6 +60,8 @@ namespace RotorSync
         
         public Int64? rotorAzimuth { get; set; }
         
+        public String rotorCOMPort { get; set; }
+        
     }
     
     public partial class frequencymap

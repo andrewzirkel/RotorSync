@@ -34,6 +34,13 @@ namespace RotorSync
         }
 
         public long? rotorAzimuth { get { return db.Find<config>(1).rotorAzimuth; } }
+        public string rotorCOMPort
+        {
+            get
+            {
+                return db.Find<config>(1).rotorCOMPort;
+            }
+        }
 
         //constructors
         public RSData(string path) : base(path)
