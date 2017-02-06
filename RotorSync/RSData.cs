@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SQLite;
+using SQLite; //SQLite-net PCL - https://github.com/praeclarum/sqlite-net
+using System.IO;
 
 namespace RotorSync
 {
-    public class RSData : SQLiteDb
+    public class RSData : SQLiteDb //from DataAccess.cs
     {
         //properties
-        private SQLiteConnection db;
+        private SQLiteConnection mydb;
         private HDHR HDHRTable;
 
         //public RSConfig properties
@@ -18,27 +19,54 @@ namespace RotorSync
         {
             get
             {
-                return db.Find<config>(1).HDHRdeviceID;
+                return mydb.Find<config>(1).HDHRdeviceID;
             }
         }
         public long singalSensitivity {
             get
             {
-                return db.Find<config>(1).sensitivity;
+                return mydb.Find<config>(1).sensitivity;
             }
         }
         public long? rotorTimeout {
             get {
-                return db.Find<config>(1).rotorTimeout;
+                return mydb.Find<config>(1).rotorTimeout;
             }
         }
 
-        public long? rotorAzimuth { get { return db.Find<config>(1).rotorAzimuth; } }
+        public long? rotorAzimuth
+        {
+            get
+            {
+                return mydb.Find<config>(1).rotorAzimuth;
+            }
+            set
+            {
+                var configRow = mydb.Find<config>(1);
+                configRow.rotorAzimuth = value;
+                int rowsAffected = mydb.Update(configRow);
+                
+            }
+        }
         public string rotorCOMPort
         {
             get
             {
-                return db.Find<config>(1).rotorCOMPort;
+                return mydb.Find<config>(1).rotorCOMPort;
+            }
+        }
+        public long? homeChannel
+        {
+            get
+            {
+                return mydb.Find<config>(1).homeChannel;
+            }
+        }
+        public long? homeChannelTimeout
+        {
+            get
+            {
+                return mydb.Find<config>(1).homeChannelTimeout;
             }
         }
 
@@ -46,9 +74,30 @@ namespace RotorSync
         public RSData(string path) : base(path)
         {
             //get this string from the registry?
-            db = new SQLiteConnection(path);
+            this.Create();
+            mydb = new SQLiteConnection(path);
+            //count config rows
+            if (mydb.Table<config>().Count() != 1)
+            {
+                //load initial data
+                loadSQL(Properties.Resources.RSData.ToString());
+            }
         }
 
+        private void loadSQL(string sqldata)
+        {
+            //we have to break appart the sql because execute only executes one command!!
+            //http://www.damirscorner.com/blog/posts/20140422-SqliteOnlyExecutesTheFirstStatementInACommand.html
+
+            var statements = sqldata.Split(new[] { ';' },
+            StringSplitOptions.RemoveEmptyEntries);
+            foreach (var statement in statements)
+            {
+                mydb.Execute(statement);
+            }
+        }
+
+        /*
         public string getHDHRDeviceIDs()
         {
             string id = null;
@@ -60,19 +109,20 @@ namespace RotorSync
             }
             return id;
         }
+        */
 
         public string map8vsb(string freqstr)
         {
             //clear traling 0
             freqstr = freqstr.Trim('0');
-            var result = db.Table<frequencymap>().Where(v => v.frequency.Equals(freqstr));
+            var result = mydb.Table<frequencymap>().Where(v => v.frequency.Equals(freqstr));
             foreach (var map in result) return map.channel.ToString();
             return "0";
         }
 
         public Int64 getChannelAzimuth(string channel)
         {
-            var result = db.Table<channels>().Where(v => v.realchannel.Equals(channel));
+            var result = mydb.Table<channels>().Where(v => v.realchannel.Equals(channel));
             foreach (var map in result) return map.azimuth;
             return 0;
         }

@@ -13,6 +13,7 @@ namespace RotorSync
     public partial class RotorSync : ServiceBase
     {
         private RS RSInstance;
+        private RSData rsdata;
         public RotorSync()
         {
             InitializeComponent();
@@ -24,13 +25,34 @@ namespace RotorSync
             }
             eventLog1.Source = "RotorSync";
             eventLog1.Log = "";
+
+            rsdata = new RSData(Properties.Settings.Default.DBPath);
         }
 
         protected override void OnStart(string[] args)
         {
-            RSInstance = new RS("10178456");
+            //RSInstance = new RS("10178456");
             //RSInstance = new RS("1050A596");
-            eventLog1.WriteEntry("In OnStart.  " + "Config Data: " + "DeviceID: " + RSInstance.deviceID);
+            string HDHRDeviceID = rsdata.HDHRDeviceID;
+            if (HDHRDeviceID == "")
+            {
+                eventLog1.WriteEntry("No HDHR Device ID set.  exiting");
+                this.Stop();
+            }
+            eventLog1.WriteEntry("In OnStart.  " + "Config Data: " + "DeviceID: " + HDHRDeviceID);
+            try
+            {
+                RSInstance = new RS(HDHRDeviceID);
+            } catch (System.IO.IOException e)
+            {
+                eventLog1.WriteEntry("Cannot open rotor com port, exiting\n" + e.Message,EventLogEntryType.Error);
+                this.Stop();
+            } catch (UnauthorizedAccessException)
+            {
+                eventLog1.WriteEntry("Rotor com port in use, exiting", EventLogEntryType.Error);
+                this.Stop();
+            }
+            
             // Set up a timer to trigger every minute.
             System.Timers.Timer timer = new System.Timers.Timer();
             timer.Interval = 1000; // 1 seconds
@@ -49,6 +71,16 @@ namespace RotorSync
             // TODO: Insert monitoring activities here.
             //eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
             //eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information);
+            /*
+            try
+            {
+                bool resuult = RSInstance.DoSync();
+            } catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            */
             if (RSInstance.DoSync())
                 eventLog1.WriteEntry("Channel: " + RSInstance.channel + 
                     "\nSymbol Quality: " + RSInstance.symbolQuality +

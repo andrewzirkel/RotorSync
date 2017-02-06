@@ -62,6 +62,10 @@ namespace RotorSync
         
         public String rotorCOMPort { get; set; }
         
+        public Int64? homeChannel { get; set; }
+        
+        public Int64? homeChannelTimeout { get; set; }
+        
     }
     
     public partial class frequencymap
