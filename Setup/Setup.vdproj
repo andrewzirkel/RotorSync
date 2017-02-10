@@ -135,6 +135,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_51CF36DA340E65E7B0A2A9337FF5FA3B"
+        "OwnerKey" = "8:_3FDD07F520FA447098C3FEFCB5C4BD5A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_538EC64A28A347830E1CFB446070816C"
         "OwnerKey" = "8:_3FDD07F520FA447098C3FEFCB5C4BD5A"
         "MsmSig" = "8:_UNDEFINED"
@@ -280,6 +286,18 @@
         "Entry"
         {
         "MsmKey" = "8:_89261BFA83D6695D596887AB11A43881"
+        "OwnerKey" = "8:_3FDD07F520FA447098C3FEFCB5C4BD5A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8DEACDADA9BDBD8A5F8517C7F7366CCC"
+        "OwnerKey" = "8:_51CF36DA340E65E7B0A2A9337FF5FA3B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8DEACDADA9BDBD8A5F8517C7F7366CCC"
         "OwnerKey" = "8:_3FDD07F520FA447098C3FEFCB5C4BD5A"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -533,6 +551,18 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_3FDD07F520FA447098C3FEFCB5C4BD5A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_51CF36DA340E65E7B0A2A9337FF5FA3B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_8DEACDADA9BDBD8A5F8517C7F7366CCC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1513,6 +1543,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_51CF36DA340E65E7B0A2A9337FF5FA3B"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Growl.Connector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=980c2339411be384, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_51CF36DA340E65E7B0A2A9337FF5FA3B"
+                    {
+                    "Name" = "8:Growl.Connector.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Growl.Connector.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_3EB4ECC262C240359B56319AC358DE11"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_538EC64A28A347830E1CFB446070816C"
             {
             "AssemblyRegister" = "3:1"
@@ -2054,6 +2115,37 @@
                     }
                 }
             "SourcePath" = "8:System.Security.Principal.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_3EB4ECC262C240359B56319AC358DE11"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8DEACDADA9BDBD8A5F8517C7F7366CCC"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Growl.CoreLibrary, Version=2.0.0.0, Culture=neutral, PublicKeyToken=13e59d82e007b064, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_8DEACDADA9BDBD8A5F8517C7F7366CCC"
+                    {
+                    "Name" = "8:Growl.CoreLibrary.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Growl.CoreLibrary.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3EB4ECC262C240359B56319AC358DE11"
@@ -2941,7 +3033,7 @@
             {
             "DefaultLocation" = "8:[CommonAppDataFolder]\\AndrewZirkel\\RotorSync\\"
             "Name" = "8:ProgramData"
-            "AlwaysCreate" = "11:FALSE"
+            "AlwaysCreate" = "11:TRUE"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Property" = "8:COMMONAPPDATAFOLDER"
@@ -2977,7 +3069,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:RotorSync"
         "ProductCode" = "8:{0923ECA7-515A-48F2-AC7D-FAE1FE77D808}"
-        "PackageCode" = "8:{87AA026F-B3E7-4C98-A9C3-85302F7DADC3}"
+        "PackageCode" = "8:{7ED2BB63-7F01-475E-A48E-80A656E09989}"
         "UpgradeCode" = "8:{A922BC14-191D-40E2-929A-B63DC1AE0EE3}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

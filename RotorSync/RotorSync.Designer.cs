@@ -28,18 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.eventLog1 = new System.Diagnostics.EventLog();
-            ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).BeginInit();
             // 
             // RotorSync
             // 
             this.ServiceName = "RotorSync";
-            ((System.ComponentModel.ISupportInitialize)(this.eventLog1)).EndInit();
 
         }
 
         #endregion
-
-        private System.Diagnostics.EventLog eventLog1;
     }
 }
