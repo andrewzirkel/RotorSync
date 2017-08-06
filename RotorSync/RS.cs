@@ -19,6 +19,10 @@ namespace RotorSync
         private int badSignalCounter;
         private int homeChannelTimeoutCounter;
 
+        //passing messages back up the chain
+        public bool messageLight { get; private set; }
+        public string message { get; private set; }
+
         public string channel { get; private set; }
         public string signalStrength { get; private set; }
         public string signalQuality { get; private set; }
@@ -61,6 +65,7 @@ namespace RotorSync
                     //Debug.Write("Current azimuth: " + currentAzimuth + " Rotate to: " + homeAzimuth + "\n");
                     currentAzimuth = homeAzimuth;
                     rotor.RotateToAzimuth(homeAzimuth.ToString());
+                    channel = "Default";
                     return true;
                 }
                 return false;
