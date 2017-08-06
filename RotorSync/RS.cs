@@ -53,10 +53,9 @@ namespace RotorSync
 
         public bool DoSync()
         {
-            channel = hdhr.RSHDHomeRunGet("/tuner0/channel");
-            if (channel.Equals("none"))
+            List<int> activeTuners = hdhr.activeTuners;
+            if ( activeTuners.Count == 0)
             {
-                //check if we need to rotate to homeAzimuth
                 if ((homeChannelTimeoutCounter++ > rsdata.homeChannelTimeout) && (currentAzimuth != homeAzimuth))
                 {
                     //Debug.Write("Current azimuth: " + currentAzimuth + " Rotate to: " + homeAzimuth + "\n");
@@ -66,46 +65,54 @@ namespace RotorSync
                 }
                 return false;
             }
-            homeChannelTimeoutCounter = 0;
-            string statusRaw = hdhr.RSHDHomeRunGet("/tuner0/status");
-            var status = statusRaw.Split(new[] {' '})
-                .Select(part => part.Split('='))
-                .ToDictionary(split => split[0], split => split[1]);
-            signalStrength = status["ss"];
-            signalQuality = status["snq"];
-            symbolQuality = status["seq"];
-            //reset bad signal counter
-            if (symbolQuality.Equals("100"))
+            if (activeTuners.Count == 1)
             {
-                badSignalCounter = 0;
-                return false;
-            }
-            //check signal Sensitivity
-            if (badSignalCounter < rsdata.singalSensitivity)
-            {
-                badSignalCounter++;
-                //Debug.Write("Bad Signal Counter: " + badSignalCounter + "\n");
-                return false;
-            }
-            badSignalCounter = 0;
-            var channelinfo = channel.Split(':');
-            //parse channel, if set by frequency
-            if (! channelinfo[0].Equals("auto"))
-            {
-                if (channelinfo[0].Equals("auto6t") || channelinfo[0].Equals("8vsb"))
+                string tunerNum = activeTuners[0].ToString();
+
+                channel = hdhr.RSHDHomeRunGet("/tuner" + tunerNum + "/channel");
+                homeChannelTimeoutCounter = 0;
+                string statusRaw = hdhr.RSHDHomeRunGet("/tuner" + tunerNum + "/status");
+                var status = statusRaw.Split(new[] { ' ' })
+                    .Select(part => part.Split('='))
+                    .ToDictionary(split => split[0], split => split[1]);
+                signalStrength = status["ss"];
+                signalQuality = status["snq"];
+                symbolQuality = status["seq"];
+                //reset bad signal counter
+                if (symbolQuality.Equals("100"))
                 {
-                    channelinfo[1] = rsdata.map8vsb(channelinfo[1]);
+                    badSignalCounter = 0;
+                    return false;
                 }
+                //check signal Sensitivity
+                if (badSignalCounter < rsdata.singalSensitivity)
+                {
+                    badSignalCounter++;
+                    //Debug.Write("Bad Signal Counter: " + badSignalCounter + "\n");
+                    return false;
+                }
+                badSignalCounter = 0;
+                var channelinfo = channel.Split(':');
+                //parse channel, if set by frequency
+                if (!channelinfo[0].Equals("auto"))
+                {
+                    if (channelinfo[0].Equals("auto6t") || channelinfo[0].Equals("8vsb"))
+                    {
+                        channelinfo[1] = rsdata.map8vsb(channelinfo[1]);
+                    }
+                }
+                channel = channelinfo[1];
+                var azimuth = rsdata.getChannelAzimuth(channel);
+                //check if antenna is already rotated to the indicated azimuth.
+                //Debug.Write("Channel:" + channel + " azimuth: " + azimuth + "\n");
+                if (currentAzimuth == azimuth) return false;
+                //Debug.Write("Current azimuth: " + currentAzimuth + " Rotate to: " + azimuth + "\n");
+                currentAzimuth = azimuth;
+                rotor.RotateToAzimuth(azimuth.ToString());
+                return true;
             }
-            channel = channelinfo[1];
-            var azimuth = rsdata.getChannelAzimuth(channel);
-            //check if antenna is already rotated to the indicated azimuth.
-            //Debug.Write("Channel:" + channel + " azimuth: " + azimuth + "\n");
-            if (currentAzimuth == azimuth) return false;
-            //Debug.Write("Current azimuth: " + currentAzimuth + " Rotate to: " + azimuth + "\n");
-            currentAzimuth = azimuth;
-            rotor.RotateToAzimuth(azimuth.ToString());
-            return true;
+            //if we get here then more than 1 channel is tuned and we do nothing
+            return false;
         }
     }
 }
