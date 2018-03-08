@@ -108,6 +108,8 @@ namespace RotorSync
                 }
                 channel = channelinfo[1];
                 var azimuth = rsdata.getChannelAzimuth(channel);
+                //check for valid azimuth
+                if (azimuth < 0) return false;
                 //check if antenna is already rotated to the indicated azimuth.
                 //Debug.Write("Channel:" + channel + " azimuth: " + azimuth + "\n");
                 if (currentAzimuth == azimuth) return false;

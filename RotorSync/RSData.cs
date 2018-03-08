@@ -120,11 +120,12 @@ namespace RotorSync
             return "0";
         }
 
+        //return azimuth for channel, or negativa value if none found
         public Int64 getChannelAzimuth(string channel)
         {
             var result = mydb.Table<channels>().Where(v => v.realchannel.Equals(channel));
             foreach (var map in result) return map.azimuth;
-            return 0;
+            return -1;
         }
     }
 }
